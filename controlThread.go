@@ -64,30 +64,7 @@ func readLines( progName string) [20]string{
 		return commandsArray
 }
 
-func main(){
-    	simplePythonCall("logo.py")
-	simplePythonCall("workflow/parslConfig.py")
-
-    	commandsArray := readLines("workflow/userScript.py")
-    	fmt.Println(commandsArray)
-
-    	//start module execution from here onwards
-	inChannelModule1 := make(chan string, 1)
-	outChannelModule1 := make(chan string, 1)
-	go pythonCall("workflow/"+commandsArray[0], inChannelModule1,"1")
-	go messagePassing(inChannelModule1, outChannelModule1)
-	fmt.Println(<-outChannelModule1)
-
-	outChannelModule2 := make(chan string, 1)
-	go pythonCall("workflow/"+commandsArray[1], outChannelModule2, "1")
-	go messagePassing(outChannelModule1, outChannelModule2)
-	fmt.Println(<- outChannelModule2)
-
-	outChannelModule3 := make(chan string, 1)
-	go pythonCall("workflow/"+commandsArray[2], outChannelModule3, "1")
-	go messagePassing(outChannelModule2, outChannelModule3)
-	fmt.Println(<- outChannelModule3)
-
+func studentTotalMarks() int{
 	//CALCULATE STUDENT TOTAL MARKS
 	csvfile1, err1 := os.Open("/home/mpiuser/Desktop/multiplyByTwo.csv")
 	if err1 != nil {
@@ -129,6 +106,10 @@ func main(){
         	studentMarksTotal += num
     	}
 
+	return studentMarksTotal
+}
+
+func classAverage() float64{
 	//RETREIVE CLASS AVERAGE 
 	csvfile2, err2 := os.Open("/home/mpiuser/Desktop/calculateAverage.csv")
 	if err2 != nil {
@@ -150,12 +131,45 @@ func main(){
 	}
 
 	//convert class average to float64
-	classAverageInt, _ := strconv.ParseFloat(classAverage, 8)
+	classAverageFloat, _ := strconv.ParseFloat(classAverage, 8)
 
-	//Dynamic decision making
+	return classAverageFloat
+}
+
+func main(){
+    	simplePythonCall("logo.py")
+	simplePythonCall("workflow/parslConfig.py")
+
+    	commandsArray := readLines("workflow/userScript.py")
+    	fmt.Println(commandsArray)
+
+    	//start module execution from here onwards
+	inChannelModule1 := make(chan string, 1)
+	outChannelModule1 := make(chan string, 1)
+	go pythonCall("workflow/"+commandsArray[0], inChannelModule1,"1")
+	go messagePassing(inChannelModule1, outChannelModule1)
+	fmt.Println(<-outChannelModule1)
+
+	outChannelModule2 := make(chan string, 1)
+	go pythonCall("workflow/"+commandsArray[1], outChannelModule2, "1")
+	go messagePassing(outChannelModule1, outChannelModule2)
+	fmt.Println(<- outChannelModule2)
+
+	outChannelModule3 := make(chan string, 1)
+	go pythonCall("workflow/"+commandsArray[2], outChannelModule3, "1")
+	go messagePassing(outChannelModule2, outChannelModule3)
+	fmt.Println(<- outChannelModule3)
+	
+	studentTot := studentTotalMarks()
+	fmt.Println("Your total is", studentTot)
+
+	classAvg := classAverage()
+	fmt.Println("The class average is", classAvg)	
+
+	//Dynamic decision making based on student total and class average
 	outChannelModule4 := make(chan string, 1)
 
-	if studentMarksTotal >= int(classAverageInt) {
+	if studentTot >= int(classAvg) {
 		//send to 'amazing' module
 		go pythonCall("workflow/"+commandsArray[3], outChannelModule4, "1")
 		go messagePassing(outChannelModule3, outChannelModule4)
