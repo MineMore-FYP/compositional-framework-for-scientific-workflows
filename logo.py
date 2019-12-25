@@ -8,4 +8,9 @@ print(" |   \ ___ / \___|_||_|  |_|\___/ \_/  \_/     \____|_____|___|  |")
 print(" |                                                               |")
 print(" +---------------------------------------------------------------+")
 
-
+print("\n")
+print("SciFlow CLI : Version 1")
+print("OS : linux x64")
+print("Developed by : University of Colombo School of Computing")
+print("...")
+print("\n")
