@@ -18,14 +18,11 @@ workflowNumber = sys.argv[1]
 
 if workflowNumber == "1":
 	orderOfModules = userScript.orderOfModules1
-	hello = userScript.hello1
-elif workflowNumber == "2":
-	orderOfModules = userScript.orderOfModules2
-	hello = userScript.hello2
+	studentName = userScript.studentName1
 
 @python_app
 def helloFunc ():
-    text = "Hello " + hello
+    text = "Hello " + studentName
     return text
 
 print(helloFunc().result())

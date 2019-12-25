@@ -12,20 +12,19 @@ parentdir = os.path.dirname(currentdir)
 sys.path.insert(0,parentdir)
 import userScript
 
-currentModule = "module2"
+currentModule = "module4"
 
 workflowNumber = sys.argv[1]
 
 if workflowNumber == "1":
 	orderOfModules = userScript.orderOfModules1
-	world = userScript.world1
-elif workflowNumber == "2":
-	orderOfModules = userScript.orderOfModules2
-	world = userScript.world2
+	durationType = userScript.durationType1
 
 @python_app
-def helloFunc ():
-    text = world + " World!"
+def terrible ():
+    text = "You had a terrible "+ durationType
     return text
 
-print(helloFunc().result())
+print(terrible().result())
+
+print("Module Completed : Terrible :'(")
