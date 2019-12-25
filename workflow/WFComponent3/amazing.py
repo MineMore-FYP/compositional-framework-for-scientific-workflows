@@ -12,13 +12,10 @@ parentdir = os.path.dirname(currentdir)
 sys.path.insert(0,parentdir)
 import userScript
 
-currentModule = "module3"
+currentModule = "amazing"
 
-workflowNumber = sys.argv[1]
-
-if workflowNumber == "1":
-	orderOfModules = userScript.orderOfModules1
-	durationType = userScript.durationType1
+orderOfModules = userScript.orderOfModules
+durationType = userScript.durationType
 
 @python_app
 def amazing ():

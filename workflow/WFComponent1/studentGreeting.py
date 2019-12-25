@@ -12,13 +12,10 @@ parentdir = os.path.dirname(currentdir)
 sys.path.insert(0,parentdir)
 import userScript
 
-currentModule = "module1"
+currentModule = "studentGreeting"
 
-workflowNumber = sys.argv[1]
-
-if workflowNumber == "1":
-	orderOfModules = userScript.orderOfModules1
-	studentName = userScript.studentName1
+orderOfModules = userScript.orderOfModules
+studentName = userScript.studentName
 
 @python_app
 def helloFunc ():

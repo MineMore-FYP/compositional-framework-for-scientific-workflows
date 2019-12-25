@@ -6,6 +6,9 @@ import (
 	"os"
 	"os/exec"
 	"log"
+	"io"
+	"strconv"
+	"encoding/csv"
 )
 
 func pythonCall(progName string, inChannel chan <- string, workflowNumber string) {
@@ -27,6 +30,12 @@ func simplePythonCall(progName string){
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os. Stderr
 	log.Println(cmd.Run())
+}
+
+func check(e error) {
+    if e != nil {
+        panic(e)
+    }
 }
 
 func messagePassing(inChannel <- chan string, outChannel chan <- string ){
@@ -85,8 +94,63 @@ func main(){
 	go messagePassing(outChannelModule2, outChannelModule3)
 	fmt.Println(<- outChannelModule3)
 
+	// Open the file
+	csvfile, err := os.Open("/home/mpiuser/Desktop/multiplyByTwo.csv")
+	if err != nil {
+		log.Fatalln("Couldn't open the csv file", err)
+	}
+
+	// Parse the file
+	r := csv.NewReader(csvfile)
+	//r := csv.NewReader(bufio.NewReader(csvfile))
+
+	// Iterate through the records
+
+	var studentMarks [10]string
+	var count = 0
+	for {
+		// Read each record from csv
+		record, err := r.Read()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			log.Fatal(err)
+		}
+		//fmt.Printf(record[0])
+		
+		studentMarks[count]=record[0]
+		//fmt.Println(count)
+		count = count + 1
+	}
+
+	//fmt.Println(studentMarks)
+
+	var studentMarksInt = []int{}
+
+	for _, i := range studentMarks {
+        	j, err := strconv.Atoi(i)
+        	if err != nil {
+            		panic(err)
+        	}
+        	studentMarksInt = append(studentMarksInt, j)
+    	}
+    	//fmt.Println(studentMarksInt)
+
+	var studentMarksTotal int
+	
+	for _, num := range studentMarksInt {
+        	studentMarksTotal += num
+    	}
+    	//fmt.Println("sum:", studentMarksTotal)
+
 	outChannelModule4 := make(chan string, 1)
 	go pythonCall("workflow/"+commandsArray[3], outChannelModule4, "1")
 	go messagePassing(outChannelModule3, outChannelModule4)
 	fmt.Println(<- outChannelModule4)
+
+	outChannelModule5 := make(chan string, 1)
+	go pythonCall("workflow/"+commandsArray[4], outChannelModule5, "1")
+	go messagePassing(outChannelModule4, outChannelModule5)
+	fmt.Println(<- outChannelModule5)
 }

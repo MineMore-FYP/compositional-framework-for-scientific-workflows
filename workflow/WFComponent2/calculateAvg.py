@@ -12,13 +12,16 @@ parentdir = os.path.dirname(currentdir)
 sys.path.insert(0,parentdir)
 import userScript
 
+currentModule = "calculateAverage"
+
+orderOfModules = userScript.orderOfModules
 classMarks = userScript.classMarks
 outputLocation = userScript.outputLocation
 
 mulTwoArray = []
 
 # open file and read the content in a list
-with open(outputLocation+'multiplyByTwo.txt', 'r') as f:
+with open(outputLocation+'multiplyByTwo.csv', 'r') as f:
     for line in f:
         # remove linebreak which is the last character of the string
         mark = line[:-1]
@@ -36,7 +39,10 @@ def classAverage ():
     average = sum(classMarks) / len(classMarks)
     return average
 
-print(classAverage().result())
+average = classAverage().result()
+
+with open(outputLocation+currentModule+'.csv', 'w') as f:
+    f.write(str(average))
 
 print("Module Completed : Calculate Class Average")
 

@@ -12,6 +12,9 @@ parentdir = os.path.dirname(currentdir)
 sys.path.insert(0,parentdir)
 import userScript
 
+currentModule = "multiplyByTwo"
+
+orderOfModules = userScript.orderOfModules
 studentMarks = userScript.studentMarks
 classMarks = userScript.classMarks
 outputLocation = userScript.outputLocation
@@ -25,7 +28,7 @@ mulTwoArray = []
 for i in studentMarks:
 	mulTwoArray.append(multiplyByTwo(i).result())
 
-with open(outputLocation+'multiplyByTwo.txt', 'w') as f:
+with open(outputLocation+currentModule+'.csv', 'w') as f:
     for k in mulTwoArray:
         f.write("%s\n" % k)
 

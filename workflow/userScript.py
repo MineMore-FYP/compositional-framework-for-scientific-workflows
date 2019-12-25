@@ -6,25 +6,31 @@ import sys
 #0
 ##WFComponent1/studentGreeting.py
 #1
-##WFComponent2/calculateAvg.py
+##WFComponent2/multiplyByTwo.py
 #2
-##WFComponent3/amazing.py
+##WFComponent2/calculateAvg.py
 #3
+##WFComponent3/amazing.py
+#4
 ##WFComponent3/terrible.py
 
-orderOfModules1 = ["studentGreeting", "calculateAvg", "amazing", "terrible"]
+orderOfModules = ["studentGreeting", "multiplyByTwo", "calculateAvg", "amazing", "terrible"]
+
+outputLocation = "/home/mpiuser/Desktop/"
 
 
 '''#######################		WFComponent1	####################################'''
 
-studentName1 = "John."
+studentName = "John."
 
 
 '''#######################		WFComponent2	####################################'''
 
-marks1 = 73
-classMarks1 = [45,35,89,100,94,87,74,68,90,54,12,36,89,70,65,33,100,99,54,99,78.56]
+studentMarks = [23,45,26,47,28,38,46,43,32,44]
+
+classMarks  = [927,734,358,212,938,603,912,592,657,556,740,625,495,864,346,623,824,543,951,591,833,340,690,
+544,797,818,847,791,727,652,856,651,686,964,765,732,662,674,714]
 
 '''#######################		WFComponent3	####################################'''
 
-durationType1 = "Semester"
+durationType = "Semester"
