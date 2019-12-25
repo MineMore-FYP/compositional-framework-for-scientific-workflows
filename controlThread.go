@@ -62,6 +62,15 @@ func readLines( progName string) [20]string{
 }
 
 func main(){
+	fmt.Println(" +---------------------------------------------------------------+")
+	fmt.Println(" |     ______        ______  		       		         |")
+	fmt.Println(" |    \\    __|    _ |  ___ |                    ____ _     ___   |")
+	fmt.Println(" |     \\  (   ___|_|| |_ | | ___ __  __  ___   / ___| |   |_ _|  |")
+	fmt.Println(" |   __ \\  \\ /  _|_ |  _|| |/ _ \\  \\/  \\/  /  | |   | |    | |   |")
+	fmt.Println(" |  \\  (_)  |  (_| || |  | | (_) |   /\\   /   | |___| |___ | |   |")
+	fmt.Println(" |   \\ ___ / \\___|_||_|  |_|\\___/ \\_/  \\_/     \\____|_____|___|  |")
+	fmt.Println(" |                                                               |")
+	fmt.Println(" +---------------------------------------------------------------+")
     	simplePythonCall("workflow/parslConfig.py")
 
     	commandsArray := readLines("workflow/userScript.py")
