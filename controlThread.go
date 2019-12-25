@@ -32,12 +32,6 @@ func simplePythonCall(progName string){
 	log.Println(cmd.Run())
 }
 
-func check(e error) {
-    if e != nil {
-        panic(e)
-    }
-}
-
 func messagePassing(inChannel <- chan string, outChannel chan <- string ){
 	msg := <- inChannel
 	outChannel <- msg
@@ -94,18 +88,17 @@ func main(){
 	go messagePassing(outChannelModule2, outChannelModule3)
 	fmt.Println(<- outChannelModule3)
 
-//JOHN
+	//CALCULATE STUDENT TOTAL MARKS
 	csvfile1, err1 := os.Open("/home/mpiuser/Desktop/multiplyByTwo.csv")
 	if err1 != nil {
 		log.Fatalln("Couldn't open the csv file", err1)
 	}
 
-	// Parse the file
 	r1 := csv.NewReader(csvfile1)
-
 	var studentMarks [10]string
 	var count = 0
-	for {
+	//read student marks csv file (record wise) and put in studentMarks array
+ 	for {
 		// Read each record from csv
 		record1, err1 := r1.Read()
 		if err1 == io.EOF {
@@ -120,6 +113,7 @@ func main(){
 
 	var studentMarksInt = []int{}
 
+	//convert student marks array to int
 	for _, i := range studentMarks {
         	j, err := strconv.Atoi(i)
         	if err != nil {
@@ -130,11 +124,12 @@ func main(){
 
 	var studentMarksTotal int
 	
+	//calculate student's total marks
 	for _, num := range studentMarksInt {
         	studentMarksTotal += num
     	}
 
-//CLASS
+	//RETREIVE CLASS AVERAGE 
 	csvfile2, err2 := os.Open("/home/mpiuser/Desktop/calculateAverage.csv")
 	if err2 != nil {
 		log.Fatalln("Couldn't open the csv file", err2)
@@ -142,6 +137,7 @@ func main(){
 
 	r2 := csv.NewReader(csvfile2)
 	var classAverage string
+	//read class average string value from csv file
 	for {
 		record2, err2 := r2.Read()
 		if err2 == io.EOF {
@@ -153,17 +149,19 @@ func main(){
 		classAverage=record2[0]
 	}
 
+	//convert class average to float64
 	classAverageInt, _ := strconv.ParseFloat(classAverage, 8)
 
 	//Dynamic decision making
-
 	outChannelModule4 := make(chan string, 1)
 
 	if studentMarksTotal >= int(classAverageInt) {
+		//send to 'amazing' module
 		go pythonCall("workflow/"+commandsArray[3], outChannelModule4, "1")
 		go messagePassing(outChannelModule3, outChannelModule4)
 		fmt.Println(<- outChannelModule4)
     	} else {
+		//send to 'terrible' module
 		go pythonCall("workflow/"+commandsArray[4], outChannelModule4, "1")
 		go messagePassing(outChannelModule3, outChannelModule4)
 		fmt.Println(<- outChannelModule4)
