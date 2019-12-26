@@ -11,7 +11,7 @@ Mrs. Branson has the following data with her;
 *Eg : [23,45,26,47,28,38,46,43,32,44]*
 * The total assignment marks for the rest of the students, out of 1000. *Eg : [927,734,358,212,938,603,912,592,657,556,740,625,495,864,346,623,824,543,951,591,833,340,690,544,797,818,847,791,727,652,856,651,686,964,765,732,662,674,714]*
 
-The SciFlow framework could be easily used in order to achieve Mrs. Branson’s vision. 
+The SciFlow framework could be easily used to construct a workflow in order to achieve Mrs. Branson’s vision. 
 
 ![Simple Workflow](/images/simpleWorkflow.png)
 
